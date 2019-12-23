@@ -1,4 +1,6 @@
 .idea
+# Django User-uploaded static files root
+/.media
 
 ### Git ###
 # Created by git for backups. To disable backups in Git:
