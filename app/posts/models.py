@@ -14,6 +14,12 @@ class Post(models.Model):
     )
     created = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return '{author} | {created}'.format(
+            author=self.author.username,
+            created=self.created,
+        )
+
 
 class PostImage(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
