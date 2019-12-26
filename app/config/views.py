@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 
 def index(request):
@@ -17,4 +17,6 @@ def index(request):
 
     index.html과 login.html이 base.html을 extends하도록 함
     """
+    if request.user.is_authenticated:
+        return redirect('posts:post-list')
     return render(request, 'index.html')
