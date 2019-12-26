@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .models import Post
 
 
 def post_list(request):
@@ -13,4 +14,12 @@ def post_list(request):
     #           -> posts:post-list
     # Template: templates/posts/post-list.html
     #           <h1>Post List</h1>
-    return render(request, 'posts/post-list.html')
+
+    # 'posts'라는 키로 모든 Post QuerySet을 전달
+    #  (순서는 pk의 역순)
+    # 그리고 전달받은 QuerySet을 순회하며 적절히 Post내용을 출력
+    posts = Post.objects.order_by('-pk')
+    context = {
+        'posts': posts,
+    }
+    return render(request, 'posts/post-list.html', context)
