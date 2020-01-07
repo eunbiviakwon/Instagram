@@ -13,6 +13,7 @@ class Post(models.Model):
         User, through='PostLike', related_name='like_post_set',
     )
     created = models.DateTimeField(auto_now_add=True)
+    test1 = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         return '{author} | {created}'.format(
