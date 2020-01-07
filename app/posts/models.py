@@ -14,6 +14,7 @@ class Post(models.Model):
     )
     created = models.DateTimeField(auto_now_add=True)
     test2 = models.CharField(max_length=20, blank=True)
+    test1 = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         return '{author} | {created}'.format(
