@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Post, PostLike, PostImage
-from .forms import PostCreateForm
+from .forms import PostCreateForm, CommentCreateForm
 
 
 def post_list(request):
@@ -20,8 +20,10 @@ def post_list(request):
     #  (순서는 pk의 역순)
     # 그리고 전달받은 QuerySet을 순회하며 적절히 Post내용을 출력
     posts = Post.objects.order_by('-pk')
+    comment_form = CommentCreateForm()
     context = {
         'posts': posts,
+        'comment_form': comment_form,
     }
     return render(request, 'posts/post-list.html', context)
 
@@ -104,10 +106,10 @@ def comment_create(request, post_pk):
     #    </ul>
     if request.method == 'POST':
         post = Post.objects.get(pk=post_pk)
-        content = request.POST['content']
-
-        post.postcomment_set.create(
-            author=request.user,
-            content=content,
-        )
+        # Form인스턴스를 만드는데, data에 request.POST로 전달된 dict를 입력
+        form = CommentCreateForm(data=request.POST)
+        # Form인스턴스 생성시, 주어진 데이터가
+        # 해당 Form이 가진 Field들에 적절한 데이터인지 검증
+        if form.is_valid():
+            form.save(post=post, author=request.user)
         return redirect('posts:post-list')
