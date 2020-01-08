@@ -7,4 +7,5 @@ class PostCreateForm(forms.Form):
         Image(File)
         Text
     """
-    pass
+    image = forms.ImageField()
+    text = forms.CharField()

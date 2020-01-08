@@ -11,5 +11,5 @@ urlpatterns = [
     path('<int:pk>/like/', views.post_like, name='post-like'),
 
     # /posts/create/
-    
+    path('create/', views.post_create, name='post-create'),
 ]
