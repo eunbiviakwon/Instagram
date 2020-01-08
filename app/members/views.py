@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login, get_user_model
+from django.contrib.auth import authenticate, login, get_user_model, logout
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
@@ -74,3 +74,19 @@ def signup_view(request):
     )
     login(request, user)
     return redirect('posts:post-list')
+
+
+def logout_view(request):
+    """
+    GET요청으로 처리함
+    요청에 있는 사용자를 logout처리
+    django.contrib.auth.logout함수를 사용한다
+
+    URL: /members/logout/
+    Template: 없음
+
+    :param request:
+    :return:
+    """
+    logout(request)
+    return redirect('members:login')

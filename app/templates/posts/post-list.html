@@ -3,6 +3,13 @@
 {% block content %}
     <div>User: {{ request.user }}</div>
     <div>Authenticated: {{ request.user.is_authenticated }}</div>
+    <div>
+        <!--
+        로그아웃버튼 (a태그로 구현)
+        이 버튼은 사용자가 로그인되어있을때만 보여주도록 한다
+        -->
+        <a href="{% url 'members:logout' %}">로그아웃</a>
+    </div>
     {% for post in posts %}
         <div>{{ post.author }}</div>
         <div>{{ post.created }}</div>
