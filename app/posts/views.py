@@ -91,3 +91,23 @@ def post_create(request):
             'form': form,
         }
         return render(request, 'posts/post-create.html', context)
+
+
+def comment_create(request, post_pk):
+    # URL: /posts/<int:post_pk>/comments/create/
+    # Template: 없음 (post-list.html내에 Form을 구현)
+    #  post-list.html 내부에서, 각 Post마다 자신에게 연결된 PostComment목록을 보여주도록 함
+    #   보여주는형식은
+    #    <ul>
+    #     <li><b>작성자명</b> <span>내용</span></li>
+    #     <li><b>작성자명</b> <span>내용</span></li>
+    #    </ul>
+    if request.method == 'POST':
+        post = Post.objects.get(pk=post_pk)
+        content = request.POST['content']
+
+        post.postcomment_set.create(
+            author=request.user,
+            content=content,
+        )
+        return redirect('posts:post-list')
