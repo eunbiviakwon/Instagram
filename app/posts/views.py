@@ -53,3 +53,15 @@ def post_like(request, pk):
         PostLike.objects.create(post=post, user=user)
 
     return redirect('posts:post-list')
+
+
+def post_create(request):
+    """
+    URL:        /posts/create/, name='post-create'
+    Template:   /posts/post-create.html
+    forms.PostCreateForm을 사용
+    """
+    context = {
+
+    }
+    return render(request, 'posts/post-create.html', context)

@@ -9,4 +9,7 @@ urlpatterns = [
 
     # /posts/3/like/
     path('<int:pk>/like/', views.post_like, name='post-like'),
+
+    # /posts/create/
+    
 ]
