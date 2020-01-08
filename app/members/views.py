@@ -39,6 +39,7 @@ def signup_view(request):
     Template: index.html을 그대로 사용
         action만 이쪽으로
     URL: /members/signup/
+    Form: members.forms.SignupForm
 
     User에 name필드를 추가
         email
