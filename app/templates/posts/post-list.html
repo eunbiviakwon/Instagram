@@ -17,6 +17,20 @@
         <div>작성자: {{ post.author }}</div>
         <div>작성일시: {{ post.created }}</div>
         <div>글내용: {{ post.content }}</div>
+        <div>
+            {% for post_image in post.postimage_set.all %}
+                <div>{{ post_image.image.url }}</div>
+                <img src="{{ post_image.image.url }}" alt="">
+            {% endfor %}
+            <!--
+                이 post가 가진 모든 PostImage들을 출력
+                <img src="무언가.image.url">
+
+                Hint
+                 post의 역방향 Manager접근, QuerySet을 얻어낸다
+                 위 QuerySet을 순회
+            -->
+        </div>
         <form action="{% url 'posts:post-like' pk=post.pk %}" method="POST">
             {% csrf_token %}
             {% if post in user.like_post_set.all %}
