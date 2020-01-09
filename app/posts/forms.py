@@ -16,6 +16,9 @@ class PostCreateForm(forms.Form):
     )
     text = forms.CharField()
 
+    def save(self):
+        pass
+
 
 class CommentCreateForm(forms.Form):
     content = forms.CharField(

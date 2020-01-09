@@ -1,5 +1,4 @@
-from django.contrib.auth import authenticate, login, get_user_model, logout
-from django.http import HttpResponse
+from django.contrib.auth import login, get_user_model, logout
 from django.shortcuts import render, redirect
 
 # 장고 기본유저나 Custom유저모델 중, 사용중인 User모델을 가져옴
@@ -48,7 +47,8 @@ def signup_view(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            login(request, user)
             return redirect('posts:post-list')
     else:
         form = SignupForm()
