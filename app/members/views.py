@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 # 장고 기본유저나 Custom유저모델 중, 사용중인 User모델을 가져옴
+from .forms import LoginForm
+
 User = get_user_model()
 
 
@@ -16,8 +18,6 @@ def login_view(request):
 
     POST요청시, 예제를 보고 적절히 로그인 처리한 후, index로 돌아갈 수 있도록 한다
     로그인에 실패하면 다시 로그인페이지로 이동
-    :param request: 
-    :return: 
     """
     if request.method == 'POST':
         username = request.POST['username']
@@ -31,7 +31,11 @@ def login_view(request):
             return redirect('posts:post-list')
         else:
             return redirect('members:login')
-    return render(request, 'members/login.html')
+    form = LoginForm()
+    context = {
+        'form': form,
+    }
+    return render(request, 'members/login.html', context)
 
 
 def signup_view(request):
