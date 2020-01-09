@@ -24,9 +24,9 @@ def login_view(request):
         if form.is_valid():
             form.login(request)
             return redirect('posts:post-list')
-        else:
-            return redirect('members:login')
-    form = LoginForm()
+    else:
+        form = LoginForm()
+
     context = {
         'form': form,
     }
