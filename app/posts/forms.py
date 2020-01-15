@@ -30,7 +30,12 @@ class PostCreateForm(forms.Form):
 class CommentCreateForm(forms.Form):
     content = forms.CharField(
         max_length=10,
-        widget=forms.Textarea()
+        widget=forms.Textarea(
+            attrs={
+                'class': 'form-control',
+                'rows': 2,
+            }
+        )
     )
 
     def save(self, post, author):
