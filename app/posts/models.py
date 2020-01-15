@@ -21,6 +21,9 @@ class Post(models.Model):
     )
     created = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ('-pk',)
+
     def __str__(self):
         return '{author} | {created}'.format(
             author=self.author.username,
@@ -59,9 +62,31 @@ class PostImage(models.Model):
 
 
 class PostComment(models.Model):
+    # postcomment_set <- related_name
+    #  반대쪽 객체에서 사용
+    #   post.postcomment_set
+    #
+    # postcomment     <- related_query_name
+    #  반대쪽 QuerySet의 filter조건 키워드명으로 사용
+    #   Post.objects.filter(postcomment__)
+    #
+    # 기본값
+    #  related_name:        <모델클래스명의 lowercase>_set
+    #  related_query_name:  <모델클래스명의 lowercase>
+    #
+    # related_name을 지정하고, related_query_name은 지정하지 않은 경우
+    #  related_name:        지정한 related_name
+    #  related_query_name:  지정한 related_name
+    #   ex) Post와 Tag관계(M2M)에서, tags필드에서의 related_name이 posts인 경우
+    #       tag.posts.all()                 <- related_name
+    #       Tag.objects.filter(posts__)      <- related_query_name
+
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
+
+    class Meta:
+        ordering = ('-pk',)
 
 
 class PostLike(models.Model):
