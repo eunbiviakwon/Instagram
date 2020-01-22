@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 
+DEBUG = True
+SECRET_KEY = 'l4ux!g)8(18*h)02j*j)y-+@cy$_l-q$4%1b_#i3++(#+5nr$l'
+
 # instagram/app/
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -31,15 +34,20 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(ROOT_DIR, '.media')
 MEDIA_URL = '/media/'
 
+# django-storages
+# Django의 FileStorage로 S3Boto3Storage(AWS의 S3)를 사용
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'l4ux!g)8(18*h)02j*j)y-+@cy$_l-q$4%1b_#i3++(#+5nr$l'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# instagram/secrets.json파일을 읽어서
+# 파이썬 객체로 만든다음
+#  1. 아래있는 ACCESS_KEY_ID, SECRET_ACCESS_KEY값을 적절히 채워준다
+#  2. DATABASE쪽의 비밀정보
+#  3. naver_login에 있는 client_id, client_secret
+AWS_ACCESS_KEY_ID = ''
+AWS_SECRET_ACCESS_KEY = ''
+AWS_STORAGE_BUCKET_NAME = 'wps-instagram-lhy2'
+AWS_AUTO_CREATE_BUCKET = True
+AWS_S3_REGION_NAME = 'ap-northeast-2'
 
 ALLOWED_HOSTS = [
     'localhost',
@@ -98,7 +106,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
@@ -112,7 +119,6 @@ DATABASES = {
         'PORT': 5432,
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -131,7 +137,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
