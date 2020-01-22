@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 IDENTITY_FILE="$HOME/.ssh/wps12th.pem"
-HOST="ubuntu@52.79.227.202"
-ORIGIN_SOURCE="$HOME/projects/fastcampus/12th/instagram"
-DEST_SOURCE="/home/ubuntu/projects/instagram"
+HOST="ubuntu@15.165.161.179"
+ORIGIN_SOURCE="$HOME/projects/fastcampus/12th/instagram/"
+DEST_SOURCE="/home/ubuntu/projects/"
 SSH_CMD="ssh -i ${IDENTITY_FILE} ${HOST}"
 
 echo "== runserver 배포 =="
@@ -21,6 +21,7 @@ ${SSH_CMD} sudo rm -rf ${DEST_SOURCE}
 
 # 로컬에 있는 파일 업로드
 echo "upload local source"
+${SSH_CMD} mkdir -p ${DEST_SOURCE}
 scp -q -i "${IDENTITY_FILE}" -r "${ORIGIN_SOURCE}" ${HOST}:${DEST_SOURCE}
 
 # pip install
