@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
+import json
 import os
 
 DEBUG = True
@@ -43,9 +44,12 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 #  1. 아래있는 ACCESS_KEY_ID, SECRET_ACCESS_KEY값을 적절히 채워준다
 #  2. DATABASE쪽의 비밀정보
 #  3. naver_login에 있는 client_id, client_secret
-AWS_ACCESS_KEY_ID = ''
-AWS_SECRET_ACCESS_KEY = ''
-AWS_STORAGE_BUCKET_NAME = 'wps-instagram-lhy2'
+
+SECRETS = json.load(open(os.path.join(ROOT_DIR, 'secrets.json'), 'rt'))
+AWS_ACCESS_KEY_ID = SECRETS['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = SECRETS['AWS_SECRET_ACCESS_KEY']
+AWS_STORAGE_BUCKET_NAME = 'wps-instagram-lhy3'
+AWS_DEFAULT_ACL = 'private'
 AWS_AUTO_CREATE_BUCKET = True
 AWS_S3_REGION_NAME = 'ap-northeast-2'
 

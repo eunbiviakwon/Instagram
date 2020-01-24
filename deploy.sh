@@ -1,15 +1,21 @@
 #!/usr/bin/env sh
 IDENTITY_FILE="$HOME/.ssh/wps12th.pem"
-HOST="ubuntu@15.165.161.179"
+USER="ubuntu"
+HOST="15.164.222.130"
+TARGET=${USER}@${HOST}
 ORIGIN_SOURCE="$HOME/projects/fastcampus/12th/instagram/"
 DEST_SOURCE="/home/ubuntu/projects/"
-SSH_CMD="ssh -i ${IDENTITY_FILE} ${HOST}"
+SSH_CMD="ssh -i ${IDENTITY_FILE} ${TARGET}"
 
 echo "== runserver 배포 =="
 
 # 숙제
-# 다시 실행되는 서버 만들기
-# (가능하다면) HOST만 바꾸고 이 스크립트를 실행하면 전체 서버가 세팅되고 runserver된 화면 볼 수 있도록 하기
+
+# 서버 초기설정
+echo "apt update & upgrade & autoremove"
+${SSH_CMD} -C 'sudo apt update && sudo DEBIAN_FRONTEND=noninteractive apt dist-upgrade -y && apt -y autoremove'
+echo "apt install python3-pip"
+${SSH_CMD} -C 'sudo apt -y install python3-pip'
 
 # pip freeze
 echo "pip freeze"
