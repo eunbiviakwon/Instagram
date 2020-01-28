@@ -44,8 +44,10 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 #  1. 아래있는 ACCESS_KEY_ID, SECRET_ACCESS_KEY값을 적절히 채워준다
 #  2. DATABASE쪽의 비밀정보
 #  3. naver_login에 있는 client_id, client_secret
+secrets_path = os.path.join(ROOT_DIR, 'secrets.json')
+SECRETS = json.load(open(secrets_path))
+# SECRETS = json.loads(open(secrets_path).read())
 
-SECRETS = json.load(open(os.path.join(ROOT_DIR, 'secrets.json'), 'rt'))
 AWS_ACCESS_KEY_ID = SECRETS['AWS_ACCESS_KEY_ID']
 AWS_SECRET_ACCESS_KEY = SECRETS['AWS_SECRET_ACCESS_KEY']
 AWS_STORAGE_BUCKET_NAME = 'wps-instagram-lhy3'
@@ -113,16 +115,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'instagram',
-        'USER': 'lhy',
-        'PASSWORD': 'dlgksdud',
-        'HOST': 'wps-lhy.cyn5jvwbgkmv.ap-northeast-2.rds.amazonaws.com',
-        'PORT': 5432,
-    }
-}
+DATABASES = SECRETS['DATABASES']
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
