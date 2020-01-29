@@ -12,6 +12,22 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 
+# boto3를 사용하는 방법
+# import json
+# import boto3
+# region_name = 'ap-northeast-2'
+# session = boto3.session.Session(
+#     profile_name='wps-secrets-manager',
+#     region_name=region_name,
+# )
+# client = session.client(
+#     service_name='secretsmanager',
+#     region_name=region_name,
+# )
+# secrets_string = client.get_secret_value(SecretId='wps')['SecretString']
+# secrets_data = json.loads(secrets_string)
+# SECRETS = secrets_data['instagram']
+
 # django-secrets-manager
 from django_secrets import SECRETS
 
