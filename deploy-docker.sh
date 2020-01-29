@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 IDENTITY_FILE="$HOME/.ssh/wps12th.pem"
 USER="ubuntu"
-HOST="13.209.96.163"
+HOST="13.209.22.24"
 TARGET=${USER}@${HOST}
 ORIGIN_SOURCE="$HOME/projects/fastcampus/12th/instagram/"
 DOCKER_REPO="azelf/wps-instagram"
@@ -14,10 +14,6 @@ echo "apt update & upgrade & autoremove"
 ${SSH_CMD} -C 'sudo apt update && sudo DEBIAN_FRONTEND=noninteractive apt dist-upgrade -y && apt -y autoremove'
 echo "apt install docker.io"
 ${SSH_CMD} -C 'sudo apt -y install docker.io'
-
-# pip freeze
-echo "pip freeze"
-"$HOME"/.pyenv/versions/3.7.5/envs/wps-instagram/bin/pip freeze > "${ORIGIN_SOURCE}"requirements.txt
 
 # docker build
 echo "docker build"
