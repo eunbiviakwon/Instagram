@@ -10,8 +10,25 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
-import json
 import os
+
+# django-secrets-manager
+from django_secrets import SECRETS
+
+AWS_SECRETS_MANAGER_SECRETS_NAME = 'wps'
+AWS_SECRETS_MANAGER_SECRETS_SECTION = 'instagram'
+AWS_SECRETS_MANAGER_REGION_NAME = 'ap-northeast-2'
+AWS_SECRETS_MANAGER_PROFILE = 'wps-secrets-manager'
+
+# django-secrets-manager의 SECRETS를 사용해서 비밀 값 할당
+AWS_ACCESS_KEY_ID = SECRETS['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = SECRETS['AWS_SECRET_ACCESS_KEY']
+
+# django-storages | AWS S3
+AWS_STORAGE_BUCKET_NAME = 'wps-instagram-lhy3'
+AWS_DEFAULT_ACL = 'private'
+AWS_AUTO_CREATE_BUCKET = True
+AWS_S3_REGION_NAME = 'ap-northeast-2'
 
 DEBUG = True
 SECRET_KEY = 'l4ux!g)8(18*h)02j*j)y-+@cy$_l-q$4%1b_#i3++(#+5nr$l'
@@ -38,22 +55,6 @@ MEDIA_URL = '/media/'
 # django-storages
 # Django의 FileStorage로 S3Boto3Storage(AWS의 S3)를 사용
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
-# instagram/secrets.json파일을 읽어서
-# 파이썬 객체로 만든다음
-#  1. 아래있는 ACCESS_KEY_ID, SECRET_ACCESS_KEY값을 적절히 채워준다
-#  2. DATABASE쪽의 비밀정보
-#  3. naver_login에 있는 client_id, client_secret
-secrets_path = os.path.join(ROOT_DIR, 'secrets.json')
-SECRETS = json.load(open(secrets_path))
-# SECRETS = json.loads(open(secrets_path).read())
-
-AWS_ACCESS_KEY_ID = SECRETS['AWS_ACCESS_KEY_ID']
-AWS_SECRET_ACCESS_KEY = SECRETS['AWS_SECRET_ACCESS_KEY']
-AWS_STORAGE_BUCKET_NAME = 'wps-instagram-lhy3'
-AWS_DEFAULT_ACL = 'private'
-AWS_AUTO_CREATE_BUCKET = True
-AWS_S3_REGION_NAME = 'ap-northeast-2'
 
 ALLOWED_HOSTS = [
     'localhost',
