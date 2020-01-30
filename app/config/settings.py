@@ -47,8 +47,6 @@ AWS_DEFAULT_ACL = 'private'
 AWS_AUTO_CREATE_BUCKET = True
 AWS_S3_REGION_NAME = 'ap-northeast-2'
 
-
-
 # django-storages
 # Django의 FileStorage로 S3Boto3Storage(AWS의 S3)를 사용
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
