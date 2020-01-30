@@ -11,9 +11,12 @@ echo "== Docker 배포 =="
 
 # 서버 초기설정
 echo "apt update & upgrade & autoremove"
-${SSH_CMD} -C 'sudo apt update && sudo DEBIAN_FRONTEND=noninteractive apt dist-upgrade -y && apt -y autoremove'
+${SSH_CMD} -C 'sudo apt update && sudo DEBIAN_FRONTEND=noninteractive apt dist-upgrade -y && sudo apt -y autoremove'
 echo "apt install docker.io"
 ${SSH_CMD} -C 'sudo apt -y install docker.io'
+
+echo "poetry export"
+poetry export -f requirements.txt > requirements.txt
 
 # docker build
 echo "docker build"
