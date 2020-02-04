@@ -63,7 +63,7 @@ def server_pull_run():
 
 # 3. Host에서 EC2로 secrets.json을 전송, EC2에서 Container로 다시 전송
 def copy_secrets():
-    run(f'scp -i -f {IDENTITY_FILE} {SECRETS_FILE} {TARGET}:/tmp', ignore_error=True)
+    run(f'scp -i {IDENTITY_FILE} {SECRETS_FILE} {TARGET}:/tmp', ignore_error=True)
     ssh_run(f'sudo docker cp /tmp/secrets.json instagram:/srv/instagram')
 
 
