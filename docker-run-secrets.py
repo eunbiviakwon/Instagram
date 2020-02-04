@@ -6,7 +6,7 @@ DOCKER_OPTIONS = [
     ('-it', ''),
     # background로 실행하는 옵션 추가
     ('-d', ''),
-    ('-p', '8001:80'),
+    ('-p', '8001:80ㅋ'),
     ('--name', 'instagram'),
 ]
 DOCKER_IMAGE_TAG = 'azelf/wps-instagram'
