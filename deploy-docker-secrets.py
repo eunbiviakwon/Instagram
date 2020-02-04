@@ -26,13 +26,14 @@ SOURCE = os.path.join(HOME, 'projects', 'fastcampus', '12th', 'instagram')
 SECRETS_FILE = os.path.join(SOURCE, 'secrets.json')
 
 
-def run(cmd):
+def run(cmd, ignore_error=False):
     process = subprocess.run(cmd, shell=True)
-    process.check_returncode()
+    if not ignore_error:
+        process.check_returncode()
 
 
-def ssh_run(cmd):
-    run(f"ssh -o StrictHostKeyChecking=no -i {IDENTITY_FILE} {TARGET} -C {cmd}")
+def ssh_run(cmd, ignore_error=False):
+    run(f"ssh -o StrictHostKeyChecking=no -i {IDENTITY_FILE} {TARGET} -C {cmd}", ignore_error=ignore_error)
 
 
 # 1. 호스트에서 도커 이미지 build, push
@@ -50,7 +51,7 @@ def server_init():
 
 # 2. 실행중인 컨테이너 종료, pull, run
 def server_pull_run():
-    ssh_run(f'sudo docker stop instagram')
+    ssh_run(f'sudo docker stop instagram', ignore_error=True)
     ssh_run(f'sudo docker pull {DOCKER_IMAGE_TAG}')
     ssh_run('sudo docker run {options} {tag} /bin/bash'.format(
         options=' '.join([
@@ -62,7 +63,7 @@ def server_pull_run():
 
 # 3. Host에서 EC2로 secrets.json을 전송, EC2에서 Container로 다시 전송
 def copy_secrets():
-    run(f'scp -i -f {IDENTITY_FILE} {SECRETS_FILE} {TARGET}:/tmp')
+    run(f'scp -i -f {IDENTITY_FILE} {SECRETS_FILE} {TARGET}:/tmp', ignore_error=True)
     ssh_run(f'sudo docker cp /tmp/secrets.json instagram:/srv/instagram')
 
 
