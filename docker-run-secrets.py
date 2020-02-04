@@ -6,7 +6,7 @@ DOCKER_OPTIONS = [
     ('-it', ''),
     # background로 실행하는 옵션 추가
     ('-d', ''),
-    ('-p', '8001:8000'),
+    ('-p', '8001:80'),
     ('--name', 'instagram'),
 ]
 DOCKER_IMAGE_TAG = 'azelf/wps-instagram'
@@ -25,5 +25,9 @@ subprocess.run('docker run {options} {tag} /bin/bash'.format(
 # secrets.json을 전송
 subprocess.run('docker cp secrets.json instagram:/srv/instagram', shell=True)
 
+# bash실행
+subprocess.run('docker exec -it instagram /bin/bash', shell=True)
+
 # runserver명령을 전송
-subprocess.run('docker exec -it instagram python manage.py runserver 0:8000', shell=True)
+# subprocess.run('docker exec -it instagram python manage.py runserver 0:8000', shell=True)
+
