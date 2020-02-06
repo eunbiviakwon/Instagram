@@ -12,7 +12,12 @@ COPY        . /srv/instagram
 WORKDIR     /srv/instagram/app
 
 # Nginx설정파일을 복사
+RUN         rm /etc/nginx/sites-enabled/default
 RUN         cp /srv/instagram/.config/instagram.nginx /etc/nginx/sites-enabled/
+
+RUN         mkdir /var/log/gunicorn
+
+CMD         /bin/bash
 
 # Gunicorn실행 (/run/instagram.sock파일을 사용해서 config.wsgi모듈과 통신)
 #  gunicorn -b unix:/run/instagram.sock config.wsgi

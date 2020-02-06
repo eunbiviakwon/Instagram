@@ -1,5 +1,19 @@
 #!/usr/bin/env python
+# poetry export
+# docker build
+# docker stop
+# docker run(bash, background mode)
+# docker cp secrets.json
+
+# ./docker-run-secrets.py <cmd>
+# 뒤에 <cmd> 내용을 docker run <cmd>처럼 실행해주기
+# 지정하지 않으면 /bin/bash 실행
 import subprocess
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('cmd', type=str, nargs=argparse.REMAINDER)
+args = parser.parse_args()
 
 DOCKER_OPTIONS = [
     ('--rm', ''),
@@ -30,10 +44,14 @@ subprocess.run('docker run {options} {tag} /bin/bash'.format(
 
 # secrets.json을 전송
 subprocess.run('docker cp secrets.json instagram:/srv/instagram', shell=True)
-
+subprocess.run('docker exec instagram /srv/instagram/app/manage.py collectstatic --noinput', shell=True)
 # bash실행
-subprocess.run('docker exec -it instagram /bin/bash', shell=True)
+# subprocess.run('docker exec -it instagram /bin/bash', shell=True)
 
+
+subprocess.run('docker exec -it instagram {cmd}'.format(
+    cmd=' '.join(args.cmd) if args.cmd else 'supervisord -c ../.config/supervisord.conf -n'
+), shell=True)
 # runserver명령을 전송
 # subprocess.run('docker exec -it instagram python manage.py runserver 0:8000', shell=True)
 

@@ -57,6 +57,8 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     '172.16.1.116',
     '*',
+    'eunbiviakwon.com',
+    'www.eunbiviakwon.com',
 ]
 AUTH_USER_MODEL = 'members.User'
 

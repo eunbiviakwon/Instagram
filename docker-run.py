@@ -2,6 +2,8 @@
 # 도커 이미지에 secrets.json이 포함
 import subprocess
 
+from argparse_sample import args
+
 DOCKER_OPTIONS = [
     ('--rm', ''),
     ('-it', ''),
@@ -26,3 +28,4 @@ subprocess.run('docker exec -it instagram /bin/bash'.format(
     ]),
     tag=DOCKER_IMAGE_TAG,
 ), shell=True)
+
